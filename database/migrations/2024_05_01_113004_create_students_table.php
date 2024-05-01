@@ -17,8 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id');
             $table->string('name');
             $table->bigInteger('points');
-            
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('parent_id')->references('id')->on('parents');
         });
     }
 
