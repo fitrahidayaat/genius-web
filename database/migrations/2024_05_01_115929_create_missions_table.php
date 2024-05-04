@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('teacher_id');
             $table->string('title');
             $table->text('description');
             $table->unsignedInteger('points');
             $table->date('due_date');
             $table->timestamps();
+            $table->foreign('teacher_id')->references('id')->on('teachers');
 
         });
     }
