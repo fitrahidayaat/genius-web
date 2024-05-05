@@ -28,13 +28,19 @@ class UserRegisterRequest extends FormRequest
             "password" => ['required', 'max:255', 'min:8'],
             "name" => ['required', 'max:255'],
             "role" => ['required', 'max:255'],
+            "invitation_code" => ['nullable', 'size:6']
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response([
-            "errors" => $validator->getMessageBag()
-        ], 400));
+        // if mobile app, use this but if web redirect to register page with errors
+        if ($this->is('api/*')) {
+            throw new HttpResponseException(response([
+                "errors" => $validator->getMessageBag()
+            ], 400));
+        } else {
+            return redirect('/register')->withErrors($validator->getMessageBag())->withInput();
+        }
     }
 }

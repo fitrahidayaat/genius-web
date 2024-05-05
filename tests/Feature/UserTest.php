@@ -2,33 +2,67 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-    public function testRegisterSuccess()
+    public function testMobileRegisterTeacherSuccess()
     {
-        $this->post('api/users', [
-            "email" => "fitrahidayaat@gmail.com",
-            "password" => "rahasia123",
-            "name" => "Muhammad Ramdhan Fitra Hidayat",
-            "role" => "student"
-        ])
-            ->assertStatus(201)
-            ->assertJson([
-                "data" => [
-                    "email" => "fitrahidayaat@gmail.com",
-                    "name" => "Muhammad Ramdhan Fitra Hidayat",
-                    "role" => "student"
-                ]
+        $this->post('api/register', [
+                "email" => "fitrahidayaat@gmail.com",
+                "password" => "rahasia123",
+                "name" => "Muhammad Ramdhan Fitra Hidayat",
+                "role" => "teacher"
+            ])
+                ->assertStatus(201)
+                ->assertJson([
+                    "data" => [
+                        "email" => "fitrahidayaat@gmail.com",
+                        "name" => "Muhammad Ramdhan Fitra Hidayat",
+                        "role" => "teacher"
+                    ]
             ]);
     }
 
-    public function testRegisterFailed()
+    public function testWebRegisterTeacherSuccess()
     {
-        $this->post('api/users', [
+        $this->post('register', [
+            "email" => "fitrahidayaat@gmail.com",
+            "password" => "rahasia123",
+            "name" => "Muhammad Ramdhan Fitra Hidayat",
+            "role" => "teacher",
+        ])->assertRedirect('/dashboard')
+        ->assertSessionHas('token');
+
+        // select first teacher
+        $teacher = \App\Models\Teacher::first();
+        $this->assertNotNull($teacher);
+    }
+
+    public function testWebRegisterStudentSuccess()
+    {
+        $this->testMobileRegisterTeacherSuccess();
+        $teacher = \App\Models\Teacher::first();
+        $this->post('register', [
+            "email" => "fitrahidayat132@gmail.com",
+            "password" => "rahasia123",
+            "name" => "Muhammad Ramdhan Fitra Hidayat",
+            "role" => "student",
+            "invitation_code" => $teacher->code,
+        ])->assertRedirect('/dashboard')
+        ->assertSessionHas('token');
+
+        // select first student
+        $student = \App\Models\Student::first();
+        $this->assertNotNull($student);
+    }
+
+    public function testMobileRegisterTeacherFailed()
+    {
+        $this->post('api/register', [
             "email" => "test",
             "password" => "",
             "name" => "",
@@ -51,19 +85,20 @@ class UserTest extends TestCase
                 ],
             ]);
     }
-    public function testRegisterUsernameAlreadyExists()
+
+    public function testMobileRegisterUsernameAlreadyExists()
     {
-        $this->testRegisterSuccess();
-        $this->post('api/users', [
+        $this->testMobileRegisterTeacherSuccess();
+        $this->post('api/register', [
             "email" => "fitrahidayaat@gmail.com",
             "password" => "rahasia123",
             "name" => "Muhammad Ramdhan Fitra Hidayat",
-            "role" => "student"
+            "role" => "teacher"
         ])
             ->assertStatus(400)
             ->assertJson([
                 "errors" => [
-                    "email" => [
+                    "message" => [
                         "Email already exists"
                     ]
                 ],
