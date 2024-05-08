@@ -7,5 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mission extends Model
 {
-    use HasFactory;
+    protected $table = 'missions';
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
+    public $incrementing = true;
+    public $timestamps = true;
+
+    public function teacher(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
+    public function ongoing(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'students_ongoing_missions', 'mission_id', 'student_id')
+            ->withPivot('created_at')
+            ->using(Ongoing::class);
+    }
 }

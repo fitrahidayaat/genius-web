@@ -6,7 +6,15 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        lato : ['Lato', 'sans-serif']
+      },
+      colors: {
+        'primary': '#0CAFF5',
+        'primary-darker': '#0A9CE5'
+      }
+    },
   },
   plugins: [
     

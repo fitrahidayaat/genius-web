@@ -29,4 +29,26 @@ class Student extends Model
         return $this->belongsTo(Teacher::class);
     }
 
+    public function ongoingMissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Mission::class, 'students_ongoing_missions', 'student_id', 'mission_id')
+            ->withPivot('created_at')
+            ->using(Ongoing::class);
+    }
+
+    public function completedMissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Mission::class, 'students_completed_missions', 'student_id', 'mission_id')
+            ->withPivot('created_at')
+            ->using(Completed::class);
+    }
+
+    // failed missions
+    public function failedMissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Mission::class, 'students_failed_missions', 'student_id', 'mission_id')
+            ->withPivot('created_at')
+            ->using(Failed::class);
+    }
+
 }

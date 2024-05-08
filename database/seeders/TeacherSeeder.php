@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Teacher;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
 
 class TeacherSeeder extends Seeder
 {
@@ -13,12 +16,13 @@ class TeacherSeeder extends Seeder
      */
     public function run(): void
     {
-        // create teacher
-        // get first user
-        $user = \App\Models\User::first();
-        // create teacher
-        $user->teacher()->create([
-            'code' => 'TCH001',
-        ]);
+        DB::delete("DELETE FROM teachers");
+        $users = User::where('role', 'teacher')->get();
+        $users->each(function ($user) {
+            $user->teacher()->create([
+                'user_id' => $user->id,
+                'code' => Str::random(6),
+            ]);
+        });
     }
 }

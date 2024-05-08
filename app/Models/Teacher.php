@@ -27,4 +27,9 @@ class Teacher extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public function missions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Mission::class);
+    }
 }

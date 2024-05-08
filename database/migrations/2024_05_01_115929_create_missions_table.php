@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('description');
             $table->unsignedInteger('points');
             $table->date('due_date');
+            $table->string('category');
+            $table->string('image_path')->default('default.jpg');
             $table->timestamps();
             $table->foreign('teacher_id')->references('id')->on('teachers');
 

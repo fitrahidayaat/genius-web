@@ -29,22 +29,13 @@ class WebAuthMiddleware
         if(!$user){
             $authenticate = false;
         }else{
-            Auth::login($user);
+            // Auth::login($user);
         }
 
         if($authenticate){
             return $next($request);
         } else{
-            return response()->json([
-                "errors" => [
-                    "message" => [
-                        "Unauthorized"
-                    ],
-                    "token" => $token,
-                    "encrypt" => bcrypt($token),
-                    "actual" => User::first()->remember_token
-                ]
-            ], 401);
+            return redirect('/login');
         }
 
         return $next($request);
