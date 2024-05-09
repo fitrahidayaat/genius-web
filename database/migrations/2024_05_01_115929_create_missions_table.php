@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->unsignedInteger('points');
-            $table->date('due_date');
+            $table->timestamp('due_date');
             $table->string('category');
             $table->string('image_path')->default('default.jpg');
             $table->timestamps();

@@ -27,8 +27,8 @@
                 <div class="flex flex-wrap">
                     @foreach ($missions as $mission)
                         <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
-                            href="">
-                            <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150" class="rounded-3xl">
+                            href="detail-mission?mission={{ $mission->id }}">
+                            <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150" height="150" class="rounded-3xl object-cover bg-gray-50 h-[150px] w-[150px]">
                             <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
                         </a>
                     @endforeach

@@ -29,6 +29,11 @@ class Student extends Model
         return $this->belongsTo(Teacher::class);
     }
 
+    public function submissions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Submission::class);
+    }
+
     public function ongoingMissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Mission::class, 'students_ongoing_missions', 'student_id', 'mission_id')

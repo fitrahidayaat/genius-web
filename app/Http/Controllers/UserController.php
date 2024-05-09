@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -59,6 +60,62 @@ class UserController extends Controller
         return view('register');
     }
 
+    public function selectRoleView()
+    {
+        return view('select-role');
+    }
+
+    public function selectRole(Request $request)
+    {
+        $user = auth()->user();
+        $role = $request->input('role');
+        
+        if($role == "student"){
+            return redirect('/invitation-code');
+        }
+
+        User::where('id', $user->id)->update([
+            'role' => $role
+        ]);
+
+        $teacher = new Teacher();
+        $teacher->user_id = $user->id;
+        $teacher->code = Str::random(6);
+        $teacher->save();
+
+        return redirect('/dashboard');
+    }
+
+    public function invitationCodeView()
+    {
+        return view('invitation-code');
+    }
+
+    public function invitationCode(Request $request)
+    {
+        $user = auth()->user();
+        $code = $request->input('code');
+        
+        $teacher = Teacher::where('code', $code)->first();
+        if(!$teacher){
+            return redirect('/invitation-code')->withErrors([
+                "message" => "Invalid invitation code"
+            ])->withInput();
+        }
+
+        User::where('id', $user->id)->update([
+            'role' => 'student'
+        ]);
+
+        $student = new Student();
+        $student->user_id = $user->id;
+        $student->teacher_id = $teacher->id;
+        $student->points = 0;
+        $student->save();
+
+        return redirect('/dashboard');
+    }
+
     public function register(UserRegisterRequest $request)
     {
         $data = $request->validated();
@@ -79,55 +136,18 @@ class UserController extends Controller
             }
         }
 
-        $user = new User($data);
+        $user = new User();
+        $user->name = $data['name'];              
+        $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
         $user->image_path = "default.jpg";
         $user->remember_token = Str::uuid()->toString();
         $user->save();
 
-        if ($user->role == "student") {
-            try {
-                $teacher = Teacher::where('code', $data['invitation_code'])->first();
-                $user->student()->create(
-                    [
-                        "user_id" => $user->id,
-                        "teacher_id" => $teacher->id,
-                        "points" => 0
-                    ]
-                );
-            } catch (\Exception $e) {
-                User::destroy($user->id);
-                if ($request->is('api/*')) {
-                    throw new HttpResponseException(response([
-                        "errors" => [
-                            "message" => [
-                                "Invalid invitation code"
-                            ]
-                        ]
-                    ], 400));
-                } else {
-                    return redirect('/register/child')->withErrors([
-                        "message" => "Invalid invitation code"
-                    ])->withInput();
-                }
-            }
-        } else {
-            $user->teacher()->create(
-                [
-                    "user_id" => $user->id,
-                    "code" => Str::random(6)
-                ]
-            );
-        }
+        Auth::login($user);
+        session(['token' => $user->remember_token]);
 
-        if ($request->is('api/*')) {
-            // This is an API request from the mobile app
-            return (new UserResource($user))->response()->setStatusCode(201);
-        } else {
-            // This is a web request
-            session(['token' => $user->remember_token]);
-            return redirect('/dashboard');
-        }
+        return redirect('/select-role');
     }
 
 
@@ -165,13 +185,12 @@ class UserController extends Controller
         $user->save();
 
         Auth::login($user);
+        session(['token' => $user->remember_token]);
 
-        if ($request->is('api/*')) {
-            // This is an API request from the mobile app
-            return (new UserResource($user));
-        } else {
-            // This is a web request
-            session(['token' => $user->remember_token]);
+        // check if role is null
+        if ($user->role == null) {
+            return redirect('/select-role');
+        } else{
             return redirect('/dashboard');
         }
     }

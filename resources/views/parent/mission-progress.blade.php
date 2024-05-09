@@ -32,9 +32,9 @@
             <div class="flex flex-wrap">
                 @foreach ($current_student_completed_missions as $mission)
                     <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
-                        href="">
+                        href="detail-mission?mission={{ $mission->id }}">
                         <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150"
-                            class="rounded-3xl">
+                            height="150" class="rounded-3xl h-[150px] w-[150px] object-cover">
                         <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
                     </a>
                 @endforeach
@@ -47,9 +47,9 @@
             <div class="flex flex-wrap">
                 @foreach ($current_student_ongoing_missions as $mission)
                     <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
-                        href="">
+                        href="detail-mission?mission={{ $mission->id }}">
                         <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150"
-                            class="rounded-3xl">
+                            height="150" class="rounded-3xl h-[150px] w-[150px] object-cover">
                         <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
                     </a>
                 @endforeach
@@ -61,9 +61,9 @@
             <div class="flex flex-wrap">
                 @foreach ($current_student_failed_missions as $mission)
                     <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
-                        href="">
+                        href="detail-mission?mission={{ $mission->id }}">
                         <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150"
-                            class="rounded-3xl">
+                            height="150" class="rounded-3xl h-[150px] w-[150px] object-cover">
                         <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
                     </a>
                 @endforeach

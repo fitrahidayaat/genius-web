@@ -18,7 +18,7 @@ class StudentSeeder extends Seeder
         DB::delete("DELETE FROM students");
         $users = User::where('role', 'student')->get();
         $users->each(function ($user) {
-            $teacher = Teacher::where('code', 'ntcSpw')->first();
+            $teacher = Teacher::first();
             $user->student()->create([
                 "user_id" => $user->id,
                 "teacher_id" => $teacher->id,

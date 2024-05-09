@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="bg-white rounded-3xl p-10 flex flex-col gap-8">
-            <button
+            <a href="/create-mission{{ $current_student ? '?student=' . $current_student->id : '' }}"
                 class="flex justify-between items-center w-full bg-primary rounded-full hover:bg-primary-darker py-5 px-5 text-white">
                 <div></div>
                 <div>Buat Misi Baru</div>
@@ -27,22 +27,24 @@
                     <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" stroke="white" />
                 </svg>
 
-            </button>
-            @foreach ($created_missions_category_based as $category => $missions)
-                <div class="flex flex-col gap-5">
-                    <h1 class="font-bold text-3xl">Misi {{ $category }}</h1>
-                    <div class="flex flex-wrap">
-                        @foreach ($missions as $mission)
-                            <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
-                                href="">
-                                <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150"
-                                    class="rounded-3xl">
-                                <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
-                            </a>
-                        @endforeach
+            </a>
+            @if ($created_missions_category_based)
+                @foreach ($created_missions_category_based as $category => $missions)
+                    <div class="flex flex-col gap-5">
+                        <h1 class="font-bold text-3xl">Misi {{ $category }}</h1>
+                        <div class="flex flex-wrap">
+                            @foreach ($missions as $mission)
+                                <a class="flex flex-col items-center gap-3 hover:shadow-lg hover:text-primary-darker transition-all rounded-3xl p-5"
+                                    href="/detail-mission?mission={{ $mission->id }}">
+                                    <img src="{{ asset('storage/' . $mission->image_path) }}" alt="" width="150"
+                                        height="150" class="rounded-3xl object-cover w-[150px] h-[150px]">
+                                    <h2 class="font-semibold max-w-[150px] text-center">{{ $mission->title }}</h2>
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @endif
         </div>
 
     </div>

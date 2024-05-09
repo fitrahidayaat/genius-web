@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('mission_id')->references('id')->on('missions');
+            $table->unique(['student_id', 'mission_id']);
         });
     }
 

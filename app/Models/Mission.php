@@ -24,4 +24,9 @@ class Mission extends Model
             ->withPivot('created_at')
             ->using(Ongoing::class);
     }
+
+    public function submissions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Submission::class);
+    }
 }

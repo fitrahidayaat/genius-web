@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students_ongoing_missions', function (Blueprint $table) {
+        Schema::create('submissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('mission_id');
-            $table->timestamps();
+            $table->string('file_path');
+            $table->string('status');
+            $table->text('comment')->nullable();
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('mission_id')->references('id')->on('missions');
             $table->unique(['student_id', 'mission_id']);
+            $table->timestamps();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students_ongoing_missions');
+        Schema::dropIfExists('submissions');
     }
 };

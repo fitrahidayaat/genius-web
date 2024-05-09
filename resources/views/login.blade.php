@@ -35,7 +35,7 @@
                 <span class="mx-5 text-gray-400 font-medium">atau</span>
                 <span class="w-36 h-[1px] bg-gray-200"> </span>
             </div>
-            <form action="/login-google" method="post" class="flex justify-center">
+            <form action="/google/redirect" method="post" class="flex justify-center">
                 @csrf
                 <button type="submit" class="flex items-center justify-center w-72 bg-white border border-gray-300 py-3 rounded-full font-medium hover:bg-gray-100">
                     <svg class="mr-5" width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

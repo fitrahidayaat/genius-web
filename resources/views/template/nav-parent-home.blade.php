@@ -17,6 +17,9 @@
     </form>
     <ul class="flex gap-8 text-gray-400">
         <li class="flex flex-col items-end">
+            @if ($current_student == null)
+                <p>{{ $user->name }}</p>
+            @else
             <p class="font-bold text-black"> Pilih Akun Anak</p>
             <div class="relative inline-block text-left">
                 <div>
@@ -45,6 +48,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+            
         </li>
 
         <script type="text/javascript">

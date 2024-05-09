@@ -36,6 +36,7 @@
                     <p class="text-green-400 font-semibold">{{ $student->student->points }} Poin</p>
                 </div>
             @endforeach
+            
 
         </div>
 

@@ -2,7 +2,7 @@
     <div>
         <ul class="flex flex-col gap-2">
             <li class="hover:bg-gray-200 transition-colors rounded-lg ">
-                <a href="/dashboard?student={{ $current_student->id }}" class="flex gap-5 items-center px-3 py-2">
+                <a href="/dashboard{{ $current_student ? '?student='.$current_student->id : ''}}" class="flex gap-5 items-center px-3 py-2">
                     @if (request()->is('dashboard', 'mission-progress', 'leaderboard'))
                         <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -31,8 +31,8 @@
                 </a>
             </li>
             <li class="hover:bg-gray-200 transition-colors rounded-lg ">
-                <a href="/mission?student={{ $current_student->id }}" class="flex gap-5 items-center px-3 py-2">
-                    @if (request()->is('mission'))
+                <a href="/mission?{{ $current_student ? '?student='.$current_student->id : ''}}" class="flex gap-5 items-center px-3 py-2">
+                    @if (request()->is('mission', 'detail-mission', 'create-mission'))
                         <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.4"
@@ -71,7 +71,7 @@
         <p class="py-4 px-3">Lainnya</p>
         <ul class="flex flex-col gap-2">
             <li class="hover:bg-gray-200 transition-colors rounded-lg">
-                <a href="/help?student={{ $current_student->id }}" class="flex gap-5 items-center px-3 py-2">
+                <a href="/help?{{ $current_student ? '?student='.$current_student->id : ''}}" class="flex gap-5 items-center px-3 py-2">
                     @if (request()->is('help'))
                         <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
                 </a>
             </li>
             <li class="hover:bg-gray-200 transition-colors rounded-lg ">
-                <a href="/setting?student={{ $current_student->id }}" class="flex gap-5 items-center px-3 py-2">
+                <a href="/setting?{{ $current_student ? '?student='.$current_student->id : ''}}" class="flex gap-5 items-center px-3 py-2">
                     @if (request()->is('setting'))
                         <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
                             xmlns="http://www.w3.org/2000/svg">

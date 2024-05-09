@@ -15,7 +15,7 @@ class StudentsOngoingMissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::delete("DELETE FROM student_ongoing_mission");
+        DB::delete("DELETE FROM students_ongoing_missions");
         $student = Student::first();
         $student->ongoingMissions()->attach(1);
         $student->ongoingMissions()->attach(2);

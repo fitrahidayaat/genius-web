@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,6 +36,7 @@ class WebAuthMiddleware
         if($authenticate){
             return $next($request);
         } else{
+            Log::info("Unauthorized access");
             return redirect('/login');
         }
 

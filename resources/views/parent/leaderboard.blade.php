@@ -38,10 +38,6 @@
             @endforeach
 
         </div>
-
-
-
-
     </div>
 @endsection
 
