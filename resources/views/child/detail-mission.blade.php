@@ -54,7 +54,7 @@
                     @csrf
                     {{-- check if already has a submission --}}
                     <label for="image"
-                        class="w-full border-4 rounded-3xl border-dashed flex justify-center items-center flex-col py-5 h-72">
+                        class="w-full border-4 rounded-3xl border-dashed flex justify-center items-center flex-col py-5 h-72 hover:bg-slate-100 cursor-pointer">
                         <img id="image_preview" src="/img/image-placeholder.png" alt="" class="">
                         <p class="img-link">Bukti Foto</p>
                     </label>
@@ -86,7 +86,7 @@
                     @csrf
                     {{-- check if already has a submission --}}
                     <label for="image"
-                        class="w-full border-4 rounded-3xl border-dashed flex justify-center items-center flex-col py-5">
+                        class="w-full border-4 rounded-3xl border-dashed flex justify-center items-center flex-col py-5 ">
                         <img id="image_preview" src="/img/image-placeholder.png" alt="" class="">
                         <p class="img-link">Bukti Foto</p>
                     </label>
