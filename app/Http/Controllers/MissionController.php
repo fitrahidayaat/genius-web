@@ -32,7 +32,7 @@ class MissionController extends Controller
 
         if($request->hasFile('image')){
             $image = $request->file('image');
-            $path = $image->storeAs('images/'.$mission->id, 'picture', 'public');
+            $path = $image->storeAs('images/mission/'.$mission->id, 'picture', 'public');
             $mission->image_path = $path;
             $mission->save();
         }
@@ -117,7 +117,7 @@ class MissionController extends Controller
             $image = $request->file('image');
             $submission->file_path = $path;
             $submission->save();
-            $path = $image->storeAs('images/mission/'.$submission->id, 'picture.'.$extension, 'public');
+            $path = $image->storeAs('images/submission/'.$submission->id, 'picture.'.$extension, 'public');
         } else{
             return redirect()->back()->withErrors([
                 "message" => "Image is required"
