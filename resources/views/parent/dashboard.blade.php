@@ -122,6 +122,7 @@
             <h1 class="text-lg">Belum ada akun anak yang tertaut, berikan kode invitasi berikut kepada anak-anak anda</h1>
             <h1 class="text-4xl font-bold mt-5">{{ $user->teacher->code }}</h1>
         </div>
+        <h1>{{ $page }}</h1>
     @endsection
     {{-- @section('right-sidebar')
         gaada
