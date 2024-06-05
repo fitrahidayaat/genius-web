@@ -146,6 +146,8 @@ class HomeController extends Controller
 
     public function studentNavController(Request $request)
     {
+        $url = explode('/', $request->url());   
+        $page = $url[count($url) - 1];
         $user = auth()->user();
 
         $teacher = $user->student->teacher;

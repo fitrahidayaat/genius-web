@@ -1,4 +1,4 @@
-<nav class="flex justify-between px-12 pt-10 pb-6 bg-white w-screen fixed">
+<nav class="flex justify-between px-12 pt-10 pb-6 bg-white w-full fixed">
     <a href="/dashboard">
         <svg width="84" height="51" viewBox="0 0 84 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
